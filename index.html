@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bulk file renamer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="top">
+    <h1>Bulk file renamer</h1>
+    <p>Add your files, set the rules, check the preview, then download.</p>
+  </header>
+
+  <main class="layout">
+    <aside class="rules" aria-label="Rename rules">
+      <section>
+        <h2>Name pattern</h2>
+        <input id="pattern" type="text" value="{name}" spellcheck="false" autocomplete="off"
+          aria-describedby="patternHint">
+        <div class="chips" id="chips">
+          <button type="button" data-token="{name}">{name}</button>
+          <button type="button" data-token="{n}">{n}</button>
+          <button type="button" data-token="{date}">{date}</button>
+          <button type="button" data-token="{modified}">{modified}</button>
+        </div>
+        <p class="hint" id="patternHint">Click a chip to insert it. <b>{name}</b> is the original name, <b>{n}</b> a
+          running number, <b>{date}</b> today, <b>{modified}</b> the file's last-modified date.</p>
+      </section>
+
+      <section>
+        <h2>Find and replace</h2>
+        <label class="field">Find
+          <input id="find" type="text" spellcheck="false" autocomplete="off" placeholder="IMG_">
+        </label>
+        <label class="field">Replace with
+          <input id="replace" type="text" spellcheck="false" autocomplete="off" placeholder="Holiday-">
+        </label>
+        <div class="checks">
+          <label><input type="checkbox" id="useRegex"> Regular expression</label>
+          <label><input type="checkbox" id="matchCase"> Match case</label>
+        </div>
+        <p class="hint error" id="regexError" hidden>That regular expression isn't valid.</p>
+      </section>
+
+      <section>
+        <h2>Letter case</h2>
+        <select id="caseMode" aria-label="Letter case">
+          <option value="none">Keep as is</option>
+          <option value="lower">lowercase</option>
+          <option value="upper">UPPERCASE</option>
+          <option value="title">Title Case</option>
+          <option value="kebab">kebab-case</option>
+          <option value="snake">snake_case</option>
+        </select>
+      </section>
+
+      <section>
+        <h2>Numbering</h2>
+        <div class="trio">
+          <label class="field">Start at<input id="start" type="number" value="1" min="0"></label>
+          <label class="field">Step<input id="step" type="number" value="1" min="1"></label>
+          <label class="field">Digits<input id="pad" type="number" value="2" min="1" max="8"></label>
+        </div>
+      </section>
+
+      <section class="last">
+        <label class="switch"><input type="checkbox" id="keepExt" checked> Keep file extensions</label>
+        <button type="button" class="link" id="resetBtn">Reset rules</button>
+      </section>
+    </aside>
+
+    <section class="work" aria-label="Files">
+      <label class="drop" id="drop">
+        <input type="file" id="fileInput" class="sr" multiple>
+        <span class="drop-title">Drop files here</span>
+        <span class="drop-sub">or <u>choose files</u> from your computer</span>
+      </label>
+
+      <div class="toolbar" id="toolbar" hidden>
+        <strong id="count"></strong>
+        <span class="spacer"></span>
+        <button type="button" class="ghost" id="sortBtn">Sort A to Z</button>
+        <button type="button" class="ghost" id="clearBtn">Remove all</button>
+      </div>
+
+      <ul class="list" id="list"></ul>
+
+      <div class="actions" id="actions" hidden>
+        <p class="status" id="status"></p>
+        <button type="button" class="ghost" id="copyBtn">Copy name list</button>
+        <button type="button" class="primary" id="downloadBtn">Download renamed files</button>
+      </div>
+      <p class="privacy">Your files stay in this browser. Renamed copies download together as one ZIP file.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year">2026</span> <a href="https://builtbyethereal.com/" target="_blank"
+        rel="noopener noreferrer">Ethereal Studios</a>. All rights reserved.</p>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+
+</html>
